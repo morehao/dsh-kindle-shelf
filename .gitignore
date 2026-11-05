@@ -1,0 +1,9 @@
+node_modules/
+lib/
+client.js
+*.tsbuildinfo
+.DS_Store
+.dsh/
+npm-debug.log*
+# 本地临时书籍/转换产物
+.local/
