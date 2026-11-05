@@ -85,7 +85,9 @@ function PanelView(): any {
   }
 
   const props: ViewProps = { state, busy, run, refresh, notify };
-  const view = tab === 'library' ? LibraryView(props) : tab === 'transfer' ? TransferView(props) : tab === 'kindle' ? KindleView(props) : SettingsView(props);
+  // 视图必须是「组件」而不是函数调用：它们内部有 hooks，直接调用会把 hooks
+  // 挂到 PanelView 自己的链上，一旦 tab/state 变化就会违反 Hooks 规则并崩成空白。
+  const View: any = tab === 'library' ? LibraryView : tab === 'transfer' ? TransferView : tab === 'kindle' ? KindleView : SettingsView;
 
   return h(
     'div',
@@ -116,7 +118,7 @@ function PanelView(): any {
         ),
       ),
     ),
-    view,
+    h(View, props),
   );
 }
 
