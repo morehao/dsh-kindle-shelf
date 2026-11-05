@@ -1,5 +1,5 @@
 /** 客户端样式：一次性注入，全部类名以 `dshk-` 前缀隔离，颜色走宿主 token。 */
-export const STYLE_ID = 'dsh-kindle-style';
+export const STYLE_ID = 'dsh-kindle-shelf-style';
 
 export const CSS = `
 .dshk-root{--k-fg:var(--dsw-alias-label-primary,#1f2328);--k-muted:var(--dsw-alias-label-secondary,#6b7280);--k-bg:var(--dsw-alias-bg-base,#fff);--k-card:var(--dsw-alias-bg-layer-1,#f8fafc);--k-border:var(--dsw-alias-border-l2,#e5e7eb);--k-accent:var(--dsw-alias-state-business-primary,#2563eb);--k-ok:var(--dsw-alias-state-success-primary,#16a34a);--k-warn:var(--dsw-alias-state-warn-primary,#d97706);--k-err:var(--dsw-alias-state-error-primary,#dc2626);color:var(--k-fg);font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:12px;height:100%;min-height:0;}

@@ -19,7 +19,7 @@ export class Store {
 
   constructor(options: { env?: NodeJS.ProcessEnv; dir?: string } = {}) {
     const home = resolveDshHome(options.env ?? process.env);
-    this.dir = options.dir ?? path.join(home, 'kindle');
+    this.dir = options.dir ?? path.join(home, 'kindle-shelf');
     this.settingsStore = createJsonStore<Settings>({
       dir: this.dir,
       file: 'settings.json',

@@ -1,7 +1,7 @@
 /**
- * Host HTTP 面：`/api/morehao/kindle/*`。
+ * Host HTTP 面：`/api/morehao/kindle-shelf/*`。
  *
- * 除封面外一律要求自定义头 `x-dsh-kindle: 1`（跨源预检顺带挡 CSRF）；
+ * 除封面外一律要求自定义头 `x-dsh-kindle-shelf: 1`（跨源预检顺带挡 CSRF）；
  * 封面由 <img> 直接请求，无法带头，故单独放行，但只允许书库目录内的文件。
  */
 import type http from 'node:http';
@@ -18,8 +18,8 @@ import type { Library } from './library.js';
 import type { PushServer } from './push.js';
 import type { KindleSftp } from './sftp.js';
 
-export const ROUTE_PREFIX = '/api/morehao/kindle';
-export const HEADER = 'x-dsh-kindle';
+export const ROUTE_PREFIX = '/api/morehao/kindle-shelf';
+export const HEADER = 'x-dsh-kindle-shelf';
 const MAX_BODY = 256 * 1024;
 
 export interface RouteDeps {

@@ -1,5 +1,5 @@
 {
-  "name": "@morehao/dsh-kindle",
+  "name": "@morehao/dsh-kindle-shelf",
   "version": "0.1.0",
   "description": "Kindle 书库工作台的 DeepSeek Harness 插件：本机电子书扫描、EPUB 转 AZW3/MOBI、局域网推送到 Kindle（浏览器下载），越狱设备可 SFTP 双向管理。",
   "type": "module",
@@ -87,10 +87,10 @@
   "author": "morehao <morehao@qq.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morehao/dsh-kindle.git"
+    "url": "git+https://github.com/morehao/dsh-kindle-shelf.git"
   },
-  "bugs": "https://github.com/morehao/dsh-kindle/issues",
-  "homepage": "https://github.com/morehao/dsh-kindle",
+  "bugs": "https://github.com/morehao/dsh-kindle-shelf/issues",
+  "homepage": "https://github.com/morehao/dsh-kindle-shelf",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"

@@ -2,7 +2,7 @@
  * Client half 入口：侧栏「Kindle」→ 工作台。
  *
  * 外壳只做三件事：拉 /state、轮询转换与下载状态、切 tab。视图按需渲染。
- * 数据只来自 Host 的 `/api/morehao/kindle/*`，客户端不碰文件系统。
+ * 数据只来自 Host 的 `/api/morehao/kindle-shelf/*`，客户端不碰文件系统。
  */
 import { useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ import { CSS, STYLE_ID } from './styles.js';
 import { Alert, Btn, Pill, h } from './ui.js';
 import { KindleView, LibraryView, SettingsView, TransferView, type ViewProps } from './views.js';
 
-export const PANEL_ID = 'dsh-kindle';
+export const PANEL_ID = 'dsh-kindle-shelf';
 
 export const inject = ['slots'];
 
@@ -165,7 +165,7 @@ export function apply(ctx: any): void {
         }
         disposeStyles();
       },
-      'dsh-kindle:client',
+      'dsh-kindle-shelf:client',
     );
   }
 }

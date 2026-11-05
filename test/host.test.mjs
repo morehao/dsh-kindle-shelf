@@ -14,14 +14,14 @@ import { apply } from '../lib/index.js';
 test('normalizeSettings 补默认值并做边界校验', () => {
   const settings = normalizeSettings({});
   assert.deepEqual(settings.libraryDirs, []);
-  assert.equal(settings.defaultFormat, 'azw3');
+  assert.equal(settings.defaultFormat, 'mobi');
   assert.equal(settings.push.port, 8180);
   assert.equal(settings.kindle.port, 22);
 
   const clamped = normalizeSettings({ push: { port: 70000 }, kindle: { port: -1 }, defaultFormat: 'pdf' });
   assert.equal(clamped.push.port, 65535);
   assert.equal(clamped.kindle.port, 1);
-  assert.equal(clamped.defaultFormat, 'azw3');
+  assert.equal(clamped.defaultFormat, 'mobi');
 });
 
 test('mergeSettings 能清空密码但保留其它字段', () => {
@@ -84,7 +84,7 @@ test('parseEpubMeta 对坏数据返回空对象而不抛', () => {
 // ── 插件装配 + HTTP ─────────────────────────────────────────────────────
 
 async function boot() {
-  const dir = await mkdtemp(path.join(tmpdir(), 'dsh-kindle-test-'));
+  const dir = await mkdtemp(path.join(tmpdir(), 'dsh-kindle-shelf-test-'));
   await mkdir(path.join(dir, 'books'), { recursive: true });
   const book = path.join(dir, 'books', '雪山飞狐.epub');
   await writeFile(book, makeEpub());
@@ -104,7 +104,7 @@ async function boot() {
   apply(ctx, { stateDir: dir });
   const registered = routes[0];
   assert.ok(registered, '应注册 webServer 路由');
-  assert.equal(registered.path, '/api/morehao/kindle');
+  assert.equal(registered.path, '/api/morehao/kindle-shelf');
 
   const { createServer } = await import('node:http');
   const server = createServer((req, res) => void registered.handler(req, res));
@@ -117,9 +117,9 @@ async function boot() {
     pushPort,
     base,
     async close() {
-      await fetch(`${base}/api/morehao/kindle/push/stop`, {
+      await fetch(`${base}/api/morehao/kindle-shelf/push/stop`, {
         method: 'POST',
-        headers: { 'x-dsh-kindle': '1' },
+        headers: { 'x-dsh-kindle-shelf': '1' },
       }).catch(() => undefined);
       await new Promise((resolve) => {
         server.close(() => resolve());
@@ -132,9 +132,9 @@ async function boot() {
 }
 
 async function call(base, method, pathname, body, withHeader = true) {
-  const response = await fetch(`${base}/api/morehao/kindle${pathname}`, {
+  const response = await fetch(`${base}/api/morehao/kindle-shelf${pathname}`, {
     method,
-    headers: { 'content-type': 'application/json', ...(withHeader ? { 'x-dsh-kindle': '1' } : {}) },
+    headers: { 'content-type': 'application/json', ...(withHeader ? { 'x-dsh-kindle-shelf': '1' } : {}) },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const json = await response.json().catch(() => ({}));
@@ -163,7 +163,7 @@ test('HTTP 面：鉴权头、状态、书库、推送队列', async () => {
     assert.equal(removed.json.removed, true);
 
     // 封面：不带自定义头也应可用
-    const cover = await fetch(`${app.base}/api/morehao/kindle/cover?path=${encodeURIComponent(app.book)}`);
+    const cover = await fetch(`${app.base}/api/morehao/kindle-shelf/cover?path=${encodeURIComponent(app.book)}`);
     assert.equal(cover.status, 200);
     assert.equal(cover.headers.get('content-type'), 'image/jpeg');
   } finally {

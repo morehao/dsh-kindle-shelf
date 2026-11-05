@@ -1,14 +1,14 @@
 <p align="center">
-  <img src="icon.svg" alt="dsh-kindle logo" width="84" height="84">
+  <img src="icon.svg" alt="dsh-kindle-shelf logo" width="84" height="84">
 </p>
 
-<h1 align="center">dsh-kindle</h1>
+<h1 align="center">dsh-kindle-shelf</h1>
 
 <p align="center">Kindle 书库工作台 · DeepSeek Harness 插件</p>
 
 <p align="center">
-  <a href="https://github.com/morehao/dsh-kindle/actions/workflows/ci.yml"><img alt="ci" src="https://github.com/morehao/dsh-kindle/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="https://www.npmjs.com/package/@morehao/dsh-kindle"><img alt="npm" src="https://img.shields.io/npm/v/@morehao/dsh-kindle.svg"></a>
+  <a href="https://github.com/morehao/dsh-kindle-shelf/actions/workflows/ci.yml"><img alt="ci" src="https://github.com/morehao/dsh-kindle-shelf/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/@morehao/dsh-kindle-shelf"><img alt="npm" src="https://img.shields.io/npm/v/@morehao/dsh-kindle-shelf.svg"></a>
 </p>
 
 Kindle 中国区退出后，「买书 → 传书」这条路断了。这个插件把「**本机找书 → 转成 Kindle 格式 → 传进 Kindle → 清理旧书**」收进 DSH 的一个工作台里，网页上点几下就完成。
@@ -34,8 +34,8 @@ Kindle 中国区退出后，「买书 → 传书」这条路断了。这个插�
 
 选中的书可以：
 
-- **转 AZW3**（KF8，推荐）：`ebook-convert --output-profile kindle_pw3`
-- **转 MOBI**：老设备兜底
+- **转 MOBI**（默认，兼容性最好）：`ebook-convert --mobi-file-type new`
+- **转 AZW3**（KF8，排版更好）：`ebook-convert --output-profile kindle_pw3`
 - **加入推送队列**
 
 转换任务串行执行，实时显示百分比；产物默认写到 `~/Documents/Books/kindle`，并自动出现在书库里（不用手动刷新目录）。
@@ -67,16 +67,16 @@ Kindle 中国区退出后，「买书 → 传书」这条路断了。这个插�
 
 ```bash
 # 装进 web profile
-dsh plugin --profile web add @morehao/dsh-kindle
+dsh plugin --profile web add @morehao/dsh-kindle-shelf
 ```
 
-然后在 profile 的 `dsh.profile.bundles` 里登记 `@morehao/dsh-kindle`（与其它插件一致），重启 DSH。侧栏会出现「Kindle」入口。
+然后在 profile 的 `dsh.profile.bundles` 里登记 `@morehao/dsh-kindle-shelf`（与其它插件一致），重启 DSH。侧栏会出现「Kindle」入口。
 
 本地开发：
 
 ```bash
-git clone git@github.com:morehao/dsh-kindle.git
-cd dsh-kindle
+git clone git@github.com:morehao/dsh-kindle-shelf.git
+cd dsh-kindle-shelf
 npm install
 npm run build
 dsh plugin --profile web add "link:$PWD"
@@ -86,7 +86,7 @@ dsh plugin --profile web add "link:$PWD"
 
 1. **设置** → 填「书库目录」（每行一个绝对路径）→ 保存
 2. **设置** → 确认 calibre 目录（默认 `/Applications/calibre.app/Contents/MacOS`）
-3. **书库** → 选书 → 转 AZW3
+3. **书库** → 选书 → 转 MOBI
 4. **传送** → 确认服务运行中 → Kindle 浏览器打开地址下载
 5. （可选）**Kindle** → 填 SSH 地址 / 端口 / root 密码或私钥 → 连接
 
@@ -97,7 +97,7 @@ dsh plugin --profile web add "link:$PWD"
 | `libraryDirs` | `[]` | 书库目录，递归扫描 |
 | `outputDir` | `~/Documents/Books/kindle` | 转换产物目录，同时纳入书库扫描 |
 | `calibreDir` | `/Applications/calibre.app/Contents/MacOS` | 含 `ebook-convert` / `ebook-meta` |
-| `defaultFormat` | `azw3` | `azw3` / `mobi` |
+| `defaultFormat` | `mobi` | `mobi` / `azw3` |
 | `push.port` | `8180` | 局域网推送端口，改后自动重启 |
 | `push.bind` | `0.0.0.0` | 监听地址 |
 | `kindle.host` / `port` / `user` | 空 / `22` / `root` | SSH 连接信息 |
@@ -108,7 +108,7 @@ dsh plugin --profile web add "link:$PWD"
 
 ## HTTP API
 
-前缀 `/api/morehao/kindle`，除封面外要求请求头 `x-dsh-kindle: 1`。
+前缀 `/api/morehao/kindle-shelf`，除封面外要求请求头 `x-dsh-kindle-shelf: 1`。
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
@@ -147,7 +147,7 @@ src/
   index.ts            # cordis 插件入口（host）
   state.ts            # settings.json / state.json
   host/
-    routes.ts         # /api/morehao/kindle/*
+    routes.ts         # /api/morehao/kindle-shelf/*
     library.ts        # 书库扫描 + 封面缓存
     epub.ts           # 轻量 EPUB 解析（fflate）
     calibre.ts        # ebook-convert / ebook-meta

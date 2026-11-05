@@ -12,7 +12,7 @@ import { createRoutes, ROUTE_PREFIX } from './host/routes.js';
 import { KindleSftp } from './host/sftp.js';
 import { Store } from './state.js';
 
-export const name = 'dsh-kindle';
+export const name = 'dsh-kindle-shelf';
 
 /** 唯一硬依赖：没有 HTTP 载体就没有工作台。 */
 export const inject = ['webServer'];
@@ -41,7 +41,7 @@ export interface PluginConfig {
 
 export function apply(ctx: PluginContext, config: PluginConfig = {}): void {
   const log = (event: string, data?: Record<string, unknown>): void => {
-    ctx.logger?.info?.(`[dsh-kindle] ${event}${data === undefined ? '' : ` ${JSON.stringify(data)}`}`);
+    ctx.logger?.info?.(`[dsh-kindle-shelf] ${event}${data === undefined ? '' : ` ${JSON.stringify(data)}`}`);
   };
 
   const store = new Store({
@@ -75,7 +75,7 @@ export function apply(ctx: PluginContext, config: PluginConfig = {}): void {
 
   const webServer = ctx.webServer;
   if (webServer === undefined) {
-    ctx.logger?.warn?.('[dsh-kindle] webServer 未注册，工作台不可用');
+    ctx.logger?.warn?.('[dsh-kindle-shelf] webServer 未注册，工作台不可用');
     return;
   }
   webServer.register({ kind: 'prefix', path: ROUTE_PREFIX, handler });
@@ -91,7 +91,7 @@ export function apply(ctx: PluginContext, config: PluginConfig = {}): void {
         void push.stop();
         void sftp.disconnect();
       },
-      'dsh-kindle:host',
+      'dsh-kindle-shelf:host',
     );
   }
 }

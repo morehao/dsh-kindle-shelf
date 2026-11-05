@@ -1,6 +1,6 @@
 /** 客户端数据入口：统一前缀、CSRF 头、错误码透出。 */
-export const API = '/api/morehao/kindle';
-export const HEADER = 'x-dsh-kindle';
+export const API = '/api/morehao/kindle-shelf';
+export const HEADER = 'x-dsh-kindle-shelf';
 
 export interface ApiFailure extends Error {
   code?: string;

@@ -108,8 +108,8 @@ export function LibraryView(props: ViewProps): any {
           'div',
           { className: 'dshk-actions' },
           h('span', { className: 'dshk-hint' }, `已选 ${selected.length} 本`),
-          h(Btn, { variant: 'primary', onClick: () => convert('azw3'), disabled: busy }, '转 AZW3'),
-          h(Btn, { onClick: () => convert('mobi'), disabled: busy }, '转 MOBI'),
+          h(Btn, { variant: 'primary', onClick: () => convert('mobi'), disabled: busy }, '转 MOBI'),
+          h(Btn, { onClick: () => convert('azw3'), disabled: busy }, '转 AZW3'),
           h(Btn, { onClick: queue, disabled: busy }, '加入推送队列'),
           h(Btn, { variant: 'ghost', onClick: () => setSelected([]) }, '清空'),
         )
@@ -394,7 +394,7 @@ export function SettingsView(props: ViewProps): any {
       Card,
       { title: '转换' },
       h(Row, { label: 'calibre 目录' }, h(Input, { value: calibreDir, onInput: setCalibreDir, mono: true })),
-      h(Row, { label: '默认格式' }, h(Select, { value: defaultFormat, onChange: (value: string) => setDefaultFormat(value as 'azw3' | 'mobi'), options: [{ value: 'azw3', label: 'AZW3（KF8，推荐）' }, { value: 'mobi', label: 'MOBI（老设备兜底）' }] })),
+      h(Row, { label: '默认格式' }, h(Select, { value: defaultFormat, onChange: (value: string) => setDefaultFormat(value as 'azw3' | 'mobi'), options: [{ value: 'mobi', label: 'MOBI（兼容性最好，推荐）' }, { value: 'azw3', label: 'AZW3（KF8，排版更好）' }] })),
       h('div', { className: 'dshk-hint' }, state.calibre === null ? 'calibre 可用' : state.calibre),
     ),
     h(

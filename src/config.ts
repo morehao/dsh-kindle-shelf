@@ -33,7 +33,7 @@ export const DEFAULT_SETTINGS: Settings = {
   libraryDirs: [],
   outputDir: '~/Documents/Books/kindle',
   calibreDir: '/Applications/calibre.app/Contents/MacOS',
-  defaultFormat: 'azw3',
+  defaultFormat: 'mobi',
   push: { port: 8180, bind: '0.0.0.0' },
   kindle: {
     host: '',
