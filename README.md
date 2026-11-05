@@ -123,6 +123,10 @@ dsh plugin --profile web add "link:$PWD"
 | POST | `/kindle/connect` / `upload` / `delete` / `download` | 设备操作 |
 | GET / POST | `/settings` | 读写设置 |
 
+## 进一步阅读
+
+- [传输与转换方案](docs/transport-and-conversion.md)：三种传输后端（局域网推送 / 越狱 SFTP / USB 直连）的对比与状态、Kindle 端为什么必须手动下载、calibre 依赖边界与去 calibre 的三条路线。
+
 ## 已知限制
 
 - **未越狱 Kindle 不能被读取或删除**，只能单向推送——这是设备能力决定的，不是插件缺陷。
